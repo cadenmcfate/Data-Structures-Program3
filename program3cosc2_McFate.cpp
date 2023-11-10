@@ -29,15 +29,15 @@ int main(void) {
     string buffer;
     myHash<string> hash;
     vector<string> mispelledVec;
-    //storing the dictionary in a binary search tree
+    //reading in the dictionary into a hash data structure:
     inFile.open("dict.txt");
     while (inFile >> buffer) {
         buffer = cleanWord(buffer);
         if (buffer.length() == 0) { continue; }
-        //cout << "attempting insert: " << buffer << endl;
         hash.insert(buffer);
     }
     inFile.close();
+    //spellchecking the book:
     timer.Start();
     inFile.open("book.txt");
     while (inFile >> buffer) {
@@ -49,11 +49,13 @@ int main(void) {
         else { invalidWords++; invalidCompares += currentCompares; mispelledVec.push_back(buffer); }
     }
     invalidCompares *= -1;
-    timer.Stop();
+    timer.Stop(); //done spellchecking
+    //writing all mispelled words to a file:
     oFile.open("mispelled.txt");
     for (int i = 0; i < mispelledVec.size(); i++) {
         oFile << mispelledVec[i] << endl;
     }
+    //displaying results:
     oFile.close();
     cout << "dictionary size " << hash.getSize() << endl;
     cout << "Done checking and these are the results" << endl;
