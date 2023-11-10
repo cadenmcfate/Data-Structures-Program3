@@ -50,7 +50,7 @@ void myHash<T>::insert(T item) {
         }
         else {
             key += attempts * attempts;
-            key = key % HASHSIZE;
+            if (key >= HASHSIZE) { key = key % HASHSIZE; }
             attempts++;
         }
     }
@@ -71,10 +71,10 @@ int myHash<T>::find(T item) {
                 return compares; //found
             }
         } else if (hash[key].empty()) {
-            return compares *= -1;
+            return compares *= -1; //word not in dictionary
         }
         key += attempts * attempts;
-        key = key % HASHSIZE;
+        if (key >= HASHSIZE) { key = key % HASHSIZE; }
         attempts++;
     }
     return 0;
@@ -84,7 +84,7 @@ template <class T>
 long int myHash<T>::findhash(T item) {
     int i; long int key = 1;
     for (i = 0; i < item.length(); i++) {
-        key += (int)item[i] * (i*i);
+        key += (int)item[i] * (i+1)*(i+1)*(i+1)*(i+1);
     }
     return key % HASHSIZE;
 }
