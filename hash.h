@@ -48,7 +48,7 @@ void myHash<T>::insert(T item) {
             return;
         }
         else { //spot was already taken
-            key += attempts * attempts; //quadratic probing
+            key += attempts * attempts * attempts; //cubic probing
             if (key >= HASHSIZE) { key = key % HASHSIZE; } //keep hash value within bounds of the array
             attempts++;
         }
@@ -71,7 +71,7 @@ int myHash<T>::find(T item) {
         } else if (hash[key].empty()) {
             return compares *= -1; //word not in dictionary
         }
-        key += attempts * attempts; //quadratic probing
+        key += attempts * attempts * attempts; //cubic probing
         if (key >= HASHSIZE) { key = key % HASHSIZE; } //keep values within the bounds of the array
         attempts++;
     }
